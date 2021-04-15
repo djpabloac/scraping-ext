@@ -7,7 +7,7 @@ Configurar el manifest.json de acuerdo al ejemplo:
 ```
 {
     "name": "<You_name>",
-    "description": "<You_description",
+    "description": "<You_description>",
     "version": "1.0",
     "manifest_version": 3,
     "action": {
