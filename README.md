@@ -13,6 +13,11 @@ Configurar el manifest.json de acuerdo al ejemplo:
     "action": {
         "default_popup": "./App/index.html"
     },
+    "content_scripts": [
+        {
+            "matches": ["https://*.linkedin.com/*"]
+        }
+    ],
     "permissions": [ "activeTab", "scripting" ]
 }
 ```
