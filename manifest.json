@@ -1,15 +1,30 @@
 {
-    "name": "Bootcamp2",
-    "description": "Get Profile",
-    "version": "1.0",
+    "name": "Linkedin Profile",
+    "description": "Get Profile Linkedin",
+    "version": "1.1.2",
     "manifest_version": 3,
     "action": {
-        "default_popup": "./App/index.html"
+        "default_popup": "./App/popup.html",
+        "default_icon": {
+            "128": "./Icons/linkedin_blue_128.png"
+        }
     },
     "content_scripts": [
         {
-            "matches": ["https://*.linkedin.com/*"]
+            "matches": [
+                "https://*.linkedin.com/*"
+            ],
+            "js": [
+                "./Scrap/utils.js",
+                "./Scrap/profile.js"
+            ]
         }
     ],
-    "permissions": [ "activeTab", "scripting" ]
+    "icons": {
+        "128": "./Icons/linkedin_blue_128.png"
+    },
+    "permissions": [
+        "activeTab",
+        "scripting"
+    ]
 }
