@@ -1,20 +1,11 @@
-let btnstrap = document.getElementById('btnstrap')
+// Function que permite ser scriping desde un perfil dinámico.
+const scrapingProfile = () => {
 
-btnstrap.addEventListener('click', async () => {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true })
-    chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        function: scrapingProfile,
-    })
-})
-
-function scrapingProfile() {
-
+    // SelectorCss del profile buscado.
     const cssSelectorsProfile = {
         profile: {
             name: 'div.ph5 > div.mt2 > div > ul > li',
             resumen: 'div.ph5 > div.mt2 > div > ul ~ h2',
-            // country: 'div.ph5.pb5 > div.display-flex.mt2.pv-top-card--reflow > div.pv-top-card__list-container > ul.cx.mt1 > li'
             country: 'div.ph5 > div.mt2 > div > ul.mt1 > li.t-16',
             email: 'div > section.pv-contact-info__contact-type.ci-email > div > a',
             phone: 'div > section.pv-contact-info__contact-type.ci-phone > ul > li > span',
@@ -22,7 +13,6 @@ function scrapingProfile() {
         },
         about: {
             about: 'div > section.pv-about-section > p.pv-about__summary-text'
-            // about: '[id="about-summary"]'
         },
         experience: {
             experience: 'div.pv-profile-section-pager > section#experience-section > ul.section-info',
@@ -46,39 +36,7 @@ function scrapingProfile() {
         }
     }
 
-    const wait = (milliseconds) => {
-        return new Promise(function (resolve) {
-            setTimeout(function () {
-                resolve()
-            }, milliseconds);
-        })
-    }
-
-    const autoscrollToElement = async function (cssSelector) {
-        const exists = document.querySelector(cssSelector)
-
-        while (exists) {
-            let maxScrollTop = document.body.clientHeight - window.innerHeight
-            let elementScrollTop = document.querySelector(cssSelector).offsetHeight
-            let currentScrollTop = window.scrollY
-
-            if (maxScrollTop == currentScrollTop || elementScrollTop <= currentScrollTop)
-                break
-
-            await wait(32)
-
-            let newScrollTop = Math.min(currentScrollTop + 20, maxScrollTop)
-
-            window.scrollTo(0, newScrollTop)
-        }
-
-        console.log('Finish autoscroll to element %s', cssSelector)
-
-        return new Promise(function (resolve) {
-            resolve()
-        })
-    }
-
+    // Datos de contacto del profile.
     const getContactProfile = async () => {
         const {
             profile: {
@@ -123,6 +81,7 @@ function scrapingProfile() {
         return contact
     }
 
+    // Datos de "acerca de" del profile.
     const getAboutProfile = async () => {
 
         const {
@@ -145,6 +104,7 @@ function scrapingProfile() {
         return about
     }
 
+    // Datos de experiencia del profile.
     const getExperienceProfile = async () => {
 
         const {
@@ -245,7 +205,11 @@ function scrapingProfile() {
 
     const getProfile = async () => {
 
+        const { div, pre, button } = createPopup()
+
         await autoscrollToElement('body')
+
+        pre.innerText = 'Comenzando ha escanear perfil.'
 
         const contactProfile = await getContactProfile()
 
@@ -258,10 +222,13 @@ function scrapingProfile() {
         profile['about'] = aboutProfile
         profile['experiences'] = experienceProfile
 
-        console.log(profile)
+        pre.innerText = JSON.stringify(profile, null, 2)
+        button.addEventListener('click', () => {
+            div.remove()
+        })
     }
 
-    getProfile().catch((e) => {
-        console.log(e)
-    })
+    getProfile()
 }
+
+scrapingProfile()
