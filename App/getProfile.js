@@ -18,9 +18,13 @@ function scrapingProfile() {
             country: 'div.ph5 > div.mt2 > div > ul.mt1 > li.t-16',
             email: 'div > section.pv-contact-info__contact-type.ci-email > div > a',
             phone: 'div > section.pv-contact-info__contact-type.ci-phone > ul > li > span',
-            urlLinkedin: 'div > section.pv-contact-info__contact-type.ci-vanity-url > div > a',
-            about: 'div > section.pv-about-section > p.pv-about__summary-text',
+            urlLinkedin: 'div > section.pv-contact-info__contact-type.ci-vanity-url > div > a'
+        },
+        about: {
+            about: 'div > section.pv-about-section > p.pv-about__summary-text'
             // about: '[id="about-summary"]'
+        },
+        experience: {
             experience: 'div.pv-profile-section-pager > section#experience-section > ul.section-info',
             experienceChildren: 'li.pv-profile-section__list-item > section.pv-profile-section',
             experienceChildrenTitle: 'div > div.pv-entity__company-summary-info > h3 > span:nth-child(2)',
@@ -122,7 +126,7 @@ function scrapingProfile() {
     const getAboutProfile = async () => {
 
         const {
-            profile: {
+            about: {
                 about: aboutCss
             },
             option: {
@@ -144,7 +148,7 @@ function scrapingProfile() {
     const getExperienceProfile = async () => {
 
         const {
-            profile: {
+            experience: {
                 experience: experienceCss,
                 experienceChildren: experienceChildrenCss,
                 experienceChildrenTitle: experienceChildrenTitleCss,
