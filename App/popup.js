@@ -6,7 +6,7 @@ btnstrap.addEventListener('click', async () => {
     if (tab){
         chrome.scripting.executeScript({
             target: { tabId: tab.id },
-            files: ['./Scrap/profile.js']
+            files: ['./Scrap/background.js']
         })
     } else {
         const pAlert = document.getElementById('alert')
