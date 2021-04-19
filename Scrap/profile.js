@@ -1,6 +1,46 @@
 // Function que permite ser scriping desde un perfil dinámico.
 const scrapingProfile = () => {
 
+    // SelectorCss del profile buscado.
+    const cssSelectorsProfile = {
+        profile: {
+            name: 'div.ph5 > div.mt2 > div > ul > li',
+            resumen: 'div.ph5 > div.mt2 > div > ul ~ h2',
+            country: 'div.ph5 > div.mt2 > div > ul.mt1 > li.t-16',
+            email: 'div > section.pv-contact-info__contact-type.ci-email > div > a',
+            phone: 'div > section.pv-contact-info__contact-type.ci-phone > ul > li > span',
+            urlLinkedin: 'div > section.pv-contact-info__contact-type.ci-vanity-url > div > a'
+        },
+        about: {
+            about: 'div > section.pv-about-section > p.pv-about__summary-text'
+        },
+        experiences: {
+            experience: 'div.pv-profile-section-pager > section#experience-section > ul.section-info',
+            experienceChildren: 'li.pv-profile-section__list-item > section.pv-profile-section',
+            experienceChildrenTitle: 'div > div.pv-entity__company-summary-info > h3 > span:nth-child(2)',
+            experienceChildrenTitle2: 'div.pv-entity__summary-info.pv-entity__summary-info--background-section > h3',
+            experienceChildrenDuration: 'div > div.pv-entity__company-summary-info > h4 > span:nth-child(2)',
+            experienceChildrenDuration2: 'div.pv-entity__summary-info.pv-entity__summary-info--background-section > div > h4.pv-entity__date-range.t-14.t-black--light.t-normal > span:nth-child(2)',
+            experienceChildrenJobs: 'ul.pv-entity__position-group',
+            experienceChildrenJobsTitle: 'div.pv-entity__role-details > div > div.pv-entity__role-container > div > div > h3 > span:nth-child(2)',
+            experienceChildrenJobsDirection: 'div > div > div.pv-entity__role-container > div > div > h4 > span:nth-child(2)',
+            experienceChildrenJobsDirection2: 'div.pv-entity__summary-info.pv-entity__summary-info--background-section > h4 > span:nth-child(2)',
+            experienceChildrenJobsDirection3: 'div > div > div.pv-entity__role-container > div > div > div > h4.pv-entity__date-range.t-14.t-black--light.t-normal > span:nth-child(2)'
+        },
+        educations: {
+            education: 'div.pv-profile-section-pager > section#education-section > ul',
+            educationChildrenTitle: 'div.pv-entity__summary-info.pv-entity__summary-info--background-section > div > h3',
+            educationChildrenSubTitle: 'div.pv-entity__summary-info.pv-entity__summary-info--background-section > div > p > span.pv-entity__comma-item',
+            educationChildrenDuration: 'div.pv-entity__summary-info.pv-entity__summary-info--background-section > p > span:nth-child(2)'
+        },
+        option: {
+            buttonSeeMore: '[data-control-name="contact_see_more"]',
+            buttonCloseSeeMore: 'button.artdeco-modal__dismiss',
+            buttonAboutSeeMore: 'line-clamp-show-more-button',
+            buttonExperienceSeeMore: 'button.pv-profile-section__see-more-inline',
+            buttonExperienceCloseSeeMore: 'button.pv-profile-section__see-less-secondary-inline'
+        }
+    }
 
     // Datos de contacto del profile.
     const getContactProfile = async () => {
@@ -74,7 +114,7 @@ const scrapingProfile = () => {
     const getExperienceProfile = async () => {
 
         const {
-            experience: {
+            experiences: {
                 experience: experienceCss,
                 experienceChildren: experienceChildrenCss,
                 experienceChildrenTitle: experienceChildrenTitleCss,
@@ -169,6 +209,62 @@ const scrapingProfile = () => {
         return experiences
     }
 
+    // Datos de experiencia del profile.
+    const getEducationProfile = async () => {
+
+        const {
+            educations: {
+                education: educationCss,
+                educationChildrenTitle: educationChildrenTitleCss,
+                educationChildrenSubTitle: educationChildrenSubTitle,
+                educationChildrenDuration: educationChildrenDurationCss
+            },
+            option: {
+                buttonExperienceSeeMore: buttonExperienceSeeMoreCss,
+                buttonExperienceCloseSeeMore: buttonExperienceCloseSeeMoreCss
+            }
+        } = cssSelectorsProfile
+
+        await wait(1000)
+
+        const buttonExperienceSeeMore = document.querySelector(buttonExperienceSeeMoreCss)
+        if (buttonExperienceSeeMore)
+            buttonExperienceSeeMore.click()
+
+        const educationsChildren = document.querySelector(educationCss)
+        let educations = []
+
+        if (educationsChildren) {
+
+            let educationsHTML = educationsChildren.children
+
+            for (const key in educationsHTML) {
+
+                if (educationsHTML[key].querySelector) {
+
+                    let education = {}
+
+                    const childrenTitle = educationsHTML[key].querySelector(educationChildrenTitleCss)
+                    education['title'] = childrenTitle?.innerText || ''
+
+                    const childrenSubTitle = educationsHTML[key].querySelector(educationChildrenSubTitle)
+                    education['university'] = childrenSubTitle?.innerText || ''
+
+                    const childrenDuration = educationsHTML[key].querySelector(educationChildrenDurationCss)
+                    education['duration'] = childrenDuration?.innerText || ''
+
+                    educations.push(education)
+                }
+            }
+        }
+
+        const buttonExperienceCloseSeeMore = document.querySelector(buttonExperienceCloseSeeMoreCss)
+        if (buttonExperienceCloseSeeMore)
+            buttonExperienceCloseSeeMore.click()
+
+        return educations
+    }
+
     const getProfile = async () => {
 
         const { div, pre, button } = createPopup()
@@ -183,10 +279,13 @@ const scrapingProfile = () => {
 
         const experienceProfile = await getExperienceProfile()
 
+        const educationProfile = await getEducationProfile()
+
         let profile = new Object()
         profile['contact'] = contactProfile
         profile['about'] = aboutProfile
         profile['experiences'] = experienceProfile
+        profile['educations'] = educationProfile
 
         pre.innerText = JSON.stringify(profile, null, 2)
         button.addEventListener('click', () => {
