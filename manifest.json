@@ -1,7 +1,7 @@
 {
     "name": "Linkedin Profile",
     "description": "Get Profile Linkedin",
-    "version": "1.1.2",
+    "version": "1.1.3222",
     "manifest_version": 3,
     "action": {
         "default_popup": "./App/popup.html",
@@ -16,6 +16,7 @@
             ],
             "js": [
                 "./Scrap/utils.js",
+                "./Scrap/search.js",
                 "./Scrap/profile.js"
             ]
         }

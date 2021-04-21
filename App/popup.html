@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <link rel="stylesheet" href="button.css">
 </head>
+
 <body>
-    <p id="alert"></p>
-    <button id='btnstrap'>LinkedIn Scrapy</button>
+    <div class="body">
+        <div class="left">
+            <input type="text" id="txtstrap" placeholder="Ingrese el puesto..." autofocus disabled value="Sistemas" />
+        </div>
+        <div class="right">
+            <button id='btnstrap'>Buscar</button>
+            <button id='btnprofile' style="background-color: gray;">Profile</button>
+        </div>
+        <p id="alert"></p>
+    </div>
+
     <script src='popup.js'></script>
 </body>
+
 </html>

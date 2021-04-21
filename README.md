@@ -23,7 +23,7 @@ Configurar el manifest.json de acuerdo al ejemplo:
         }
     ],
     "icons": {
-        "128": "<You_icons.png>g"
+        "128": "<You_icons.png>"
     },
     "permissions": [ "activeTab", "scripting" ]
 }

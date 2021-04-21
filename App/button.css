@@ -3,5 +3,27 @@ button {
     border: 2px solid;
     border-radius: 4px;
     color:#ffffff; 
-    padding: 8px; width: 100px;
+    padding: 8px; 
+    width: 100px;
+    cursor: pointer;
+}
+
+input[type=text]{
+    height: 30px;
+}
+
+.left {
+    width: 180px;
+    float: left;
+    margin-top: 5px; 
+}
+
+.right {
+    width: 100px;
+    float: right;
+}
+
+.body{
+    width: 280px;
+    min-height: 55px;
 }
