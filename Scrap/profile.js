@@ -1,7 +1,7 @@
 // Function que permite ser scriping desde un perfil dinámico.
-const scrapingProfile = () => {
-
-    // SelectorCss del profile buscado.
+const scrapingProfile = async () => {
+    
+    // SelectorCss del profile buscado poner en la db.
     const cssSelectorsProfile = {
         profile: {
             name: 'div.ph5 > div.mt2 > div > ul > li',
