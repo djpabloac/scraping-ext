@@ -6,9 +6,19 @@ button {
     padding: 8px; 
     width: 100px;
     cursor: pointer;
+    height: 42px;
+}
+
+button:hover {
+    background-color: #1e4a81;
+}
+
+button:disabled {
+    background-color: #797a7c;
 }
 
 input[type=text]{
+    width: 270px;
     height: 30px;
 }
 
@@ -21,6 +31,10 @@ input[type=text]{
 .right {
     width: 100px;
     float: right;
+}
+
+.textAlign {
+    text-align: right;
 }
 
 .body{

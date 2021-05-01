@@ -1,7 +1,7 @@
 {
     "name": "Linkedin Profile",
     "description": "Get Profile Linkedin",
-    "version": "1.1.3222",
+    "version": "1.1.4",
     "manifest_version": 3,
     "action": {
         "default_popup": "./App/popup.html",
@@ -25,7 +25,20 @@
         "128": "./Icons/linkedin_blue_128.png"
     },
     "permissions": [
+        "tabs",
         "activeTab",
         "scripting"
-    ]
+    ],
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+            "default": "Ctrl+Shift+F",
+            "mac": "MacCtrl+Shift+F"
+            },
+            "description": "Opens ./App/popup.html"
+        }
+    },
+    "background": {
+        "service_worker": "background.js"
+    }
 }
