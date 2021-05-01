@@ -1,6 +1,6 @@
 // Function que permite ser scriping desde un perfil dinámico.
 const scrapingProfile = async () => {
-    
+ 
     // SelectorCss del profile buscado poner en la db.
     const cssSelectorsProfile = {
         profile: {
@@ -64,7 +64,8 @@ const scrapingProfile = async () => {
         const country = document.querySelector(countryCss)?.innerText
 
         const buttonSeeMore = document.querySelector(buttonSeeMoreCss)
-        buttonSeeMore.click()
+        if(buttonSeeMore)
+            buttonSeeMore.click()
 
         await wait(1000)
 
@@ -75,7 +76,8 @@ const scrapingProfile = async () => {
             urlLinkedin = `https://${urlLinkedin}`
 
         const buttonCloseSeeMore = document.querySelector(buttonCloseSeeMoreCss)
-        buttonCloseSeeMore.click()
+        if(buttonCloseSeeMore)
+            buttonCloseSeeMore.click()
 
         let contact = {}
         contact['name'] = name || ''
@@ -267,7 +269,7 @@ const scrapingProfile = async () => {
 
     const getProfile = async () => {
 
-        const { div, pre, button } = createPopup()
+        const { div, pre } = createPopup()
 
         await autoscrollToElement('body')
 
@@ -287,10 +289,11 @@ const scrapingProfile = async () => {
         profile['experiences'] = experienceProfile
         profile['educations'] = educationProfile
 
-        pre.innerText = JSON.stringify(profile, null, 2)
-        button.addEventListener('click', () => {
-            div.remove()
-        })
+        const profileJSON = JSON.stringify(profile, null, 2)
+        pre.innerText =profileJSON
+       
+        const origin = window.location.href
+        chrome.runtime.sendMessage("hbnpchbibiafacoehbnkphomnpacgnej", { action: "profile", data: profileJSON, key: origin })
     }
 
     getProfile()

@@ -1,4 +1,3 @@
-
 // Function que permite esperar por milésimas de segundos.
 const wait = (milliseconds) => {
     return new Promise(function (resolve) {
@@ -7,6 +6,7 @@ const wait = (milliseconds) => {
         }, milliseconds);
     })
 }
+
 
 // Function que permite scrollear indicado un selector.
 const autoscrollToElement = async (cssSelector) => {
@@ -45,17 +45,11 @@ const createPopup = () => {
     pre.id = 'krowdy-profile-pre'
     pre.style = stylePre
 
-    const button = document.createElement('button')
-    button.id = 'krowdy-profile-button'
-    button.style = 'background-color: #3582e0;border: 2px solid #3582e0;border-radius: 4px;color:#ffffff; padding: 8px;position: absolute;bottom: 10px;right: 10px;'
-    button.innerText = 'Aceptar'
-
     const bodyElement = document.querySelector('div.body')
     bodyElement.appendChild(div)
 
     pre.innerText = 'Estamos extrayendo la información!!!'
     div.appendChild(pre)
-    div.appendChild(button)
 
-    return { div, pre, button }
+    return { div, pre }
 }
