@@ -1,8 +1,10 @@
-### Extensión Google Chrome
-Primer ejemplo de extensión en Google Chrome.
+# ScrapingExt
 
-## manifest.json
-Configurar el manifest.json de acuerdo al ejemplo:
+ScrapingExt is an extension for Google Chrome to extract data from Linkedin profiles.
+
+## Config manifest.json
+
+Configure the manifest.json according to the example:
 
 ```
 {
@@ -29,4 +31,11 @@ Configurar el manifest.json de acuerdo al ejemplo:
 }
 ```
 
-Esta vez el ejemplo trata de un "scripting".
+## Authors
+
+- [@dj.pablo.ac](https://gitlab.com/dj.pablo.ac)
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
